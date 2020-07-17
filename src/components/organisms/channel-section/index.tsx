@@ -2,10 +2,12 @@ import React, { Component } from "react";
 
 import "./style.css";
 import { ChannelList } from "../channel-list";
+import { Channel } from "../../../interfaces/channel";
 
 interface TProps {
-  channels: string[];
-  addChannel: (channel: string) => void;
+  channels: Channel[];
+  addChannel: (channel: Channel) => void;
+  openChannel: (channel: Channel) => void;
 }
 
 export class ChannelSection extends Component<TProps> {
@@ -21,7 +23,11 @@ export class ChannelSection extends Component<TProps> {
 
   addChannel = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.addChannel(this.state.channel);
+    this.props.addChannel({
+      id: this.state.channel,
+      name: this.state.channel,
+      isOpened: false,
+    });
     this.setState({
       channel: "",
     });
@@ -29,11 +35,11 @@ export class ChannelSection extends Component<TProps> {
 
   render() {
     const { channel } = this.state;
-    const { channels } = this.props;
+    const { channels, openChannel } = this.props;
 
     return (
       <div className="channel-section">
-        <ChannelList channels={channels} />
+        <ChannelList channels={channels} openChannel={openChannel} />
         <form onSubmit={this.addChannel}>
           <input
             name="channel"

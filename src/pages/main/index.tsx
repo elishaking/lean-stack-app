@@ -3,23 +3,39 @@ import { RouteComponentProps } from "@reach/router";
 
 import "./main.css";
 import { ChannelSection } from "../../components/organisms";
+import { Channel } from "../../interfaces/channel";
 
 interface TState {
-  channels: string[];
+  channels: Channel[];
   users: string[];
   messages: string[];
 }
 
 export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
   state = {
-    channels: ["General"],
+    channels: [
+      {
+        id: "General",
+        name: "General",
+        isOpened: true,
+      },
+    ],
     users: [],
     messages: [],
   };
 
-  addChannel = (channel: string) => {
+  addChannel = (channel: Channel) => {
     this.setState((state, props) => ({
       channels: [...state.channels, channel],
+    }));
+  };
+
+  openChannel = (channel: Channel) => {
+    this.setState((state, props) => ({
+      channels: state.channels.map((ch) => {
+        ch.isOpened = ch.id === channel.id;
+        return ch;
+      }),
     }));
   };
 
@@ -28,7 +44,11 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
 
     return (
       <div className="main-page">
-        <ChannelSection channels={channels} addChannel={this.addChannel} />
+        <ChannelSection
+          channels={channels}
+          addChannel={this.addChannel}
+          openChannel={this.openChannel}
+        />
       </div>
     );
   }
