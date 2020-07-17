@@ -1,0 +1,27 @@
+.channel-section {
+  padding: 1.3em;
+  background-color: #003049;
+  color: #fff;
+}
+
+ul {
+  list-style: none;
+  margin-bottom: 1em;
+}
+
+li {
+  margin-bottom: 0.3em;
+}
+
+input {
+  background-color: #004b74;
+  color: #fff;
+}
+
+input:hover {
+  background-color: #004368;
+}
+
+::placeholder {
+  color: #d1d1d1;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import "./style.css";
 import { ChannelList } from "../channel-list";
 
 interface TProps {
@@ -31,7 +32,7 @@ export class ChannelSection extends Component<TProps> {
     const { channels } = this.props;
 
     return (
-      <div>
+      <div className="channel-section">
         <ChannelList channels={channels} />
         <form onSubmit={this.addChannel}>
           <input

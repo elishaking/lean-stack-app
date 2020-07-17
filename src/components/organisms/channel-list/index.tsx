@@ -7,10 +7,10 @@ interface TProps {
 
 export const ChannelList = ({ channels }: TProps) => {
   return (
-    <div>
+    <ul>
       {channels.map((channel) => {
         return <ChannelItem key={channel} name={channel} />;
       })}
-    </div>
+    </ul>
   );
 };

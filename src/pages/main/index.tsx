@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { RouteComponentProps } from "@reach/router";
+
+import "./main.css";
 import { ChannelSection } from "../../components/organisms";
 
 interface TState {
@@ -25,7 +27,7 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
     const { channels } = this.state;
 
     return (
-      <div>
+      <div className="main-page">
         <ChannelSection channels={channels} addChannel={this.addChannel} />
       </div>
     );
