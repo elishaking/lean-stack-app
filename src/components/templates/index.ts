@@ -1,0 +1,1 @@
+export { SideTemplate } from "./side";

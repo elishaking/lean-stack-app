@@ -4,6 +4,7 @@ import { RouteComponentProps } from "@reach/router";
 import "./main.css";
 import { ChannelSection } from "../../components/organisms";
 import { Channel } from "../../interfaces/channel";
+import { SideTemplate } from "../../components/templates";
 
 interface TState {
   channels: Channel[];
@@ -44,11 +45,13 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
 
     return (
       <div className="main-page">
-        <ChannelSection
-          channels={channels}
-          addChannel={this.addChannel}
-          openChannel={this.openChannel}
-        />
+        <SideTemplate>
+          <ChannelSection
+            channels={channels}
+            addChannel={this.addChannel}
+            openChannel={this.openChannel}
+          />
+        </SideTemplate>
       </div>
     );
   }
