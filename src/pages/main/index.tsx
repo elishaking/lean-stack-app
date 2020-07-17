@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { RouteComponentProps } from "@reach/router";
 
 import "./main.css";
-import { ChannelSection } from "../../components/organisms";
+import { ChannelSection, UserSection } from "../../components/organisms";
 import { Channel } from "../../interfaces/channel";
 import { SideTemplate } from "../../components/templates";
+import { User } from "../../interfaces/user";
 
 interface TState {
   channels: Channel[];
-  users: string[];
+  users: User[];
   messages: string[];
 }
 
@@ -40,8 +41,23 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
     }));
   };
 
+  addUser = (user: User) => {
+    this.setState((state, props) => ({
+      users: [...state.users, user],
+    }));
+  };
+
+  openUser = (user: User) => {
+    this.setState((state, props) => ({
+      users: state.users.map((u) => {
+        u.isOpened = u.id === user.id;
+        return u;
+      }),
+    }));
+  };
+
   render() {
-    const { channels } = this.state;
+    const { channels, users } = this.state;
 
     return (
       <div className="main-page">
@@ -50,6 +66,11 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
             channels={channels}
             addChannel={this.addChannel}
             openChannel={this.openChannel}
+          />
+          <UserSection
+            users={users}
+            addUser={this.addUser}
+            openUser={this.openUser}
           />
         </SideTemplate>
       </div>

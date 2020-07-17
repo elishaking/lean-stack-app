@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./style.css";
+import "../section-style.css";
 import { ChannelList } from "../channel-list";
 import { Channel } from "../../../interfaces/channel";
 
