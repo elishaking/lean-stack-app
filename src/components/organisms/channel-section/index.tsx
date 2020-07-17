@@ -37,7 +37,7 @@ export class ChannelSection extends Component<TProps> {
         <form onSubmit={this.addChannel}>
           <input
             name="channel"
-            placeholder="channel"
+            placeholder="Add channel"
             onChange={this.onChange}
             value={channel}
           />

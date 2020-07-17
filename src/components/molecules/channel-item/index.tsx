@@ -5,5 +5,9 @@ interface TProps {
 }
 
 export const ChannelItem = ({ name }: TProps) => {
-  return <li># {name}</li>;
+  return (
+    <li>
+      <strong>#</strong> {name}
+    </li>
+  );
 };
