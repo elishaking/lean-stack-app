@@ -1,11 +1,14 @@
 import React from "react";
+import { Router } from "@reach/router";
+
 import "./App.css";
+import { MainPage } from "./pages/main";
 
 function App() {
   return (
-    <div className="App">
-      <h1>App</h1>
-    </div>
+    <Router>
+      <MainPage path="/" />
+    </Router>
   );
 }
 
