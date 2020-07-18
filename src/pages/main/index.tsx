@@ -24,11 +24,16 @@ interface TState {
   messages: Message[];
   currentUserIdx: number;
   currentChannelIdx: number;
+  channelActive: boolean;
 }
 
 export class MainPage extends Component<TProps, Readonly<TState>> {
+  user: User;
+
   constructor(props: TProps) {
     super(props);
+
+    this.user = props.user;
 
     this.state = {
       channels: [
@@ -42,6 +47,7 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
       messages: [],
       currentUserIdx: 0,
       currentChannelIdx: 0,
+      channelActive: true,
     };
   }
 
@@ -97,19 +103,25 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
 
   getMessagesAndListen = () => {
     const { socket } = this.props;
-    const { channels, currentChannelIdx } = this.state;
+    const { channelActive, channels, currentChannelIdx } = this.state;
+    const currentChannel = channels[currentChannelIdx];
 
-    axios.get("/messages").then((res) => {
+    let messageKey = currentChannel.id;
+    let url = `/messages/${messageKey}`;
+
+    if (!channelActive) {
+      messageKey = this.getKey();
+      url = `/messages/users/${messageKey}`;
+    }
+
+    axios.get(url).then((res) => {
       const messages: Message[] = res.data.data;
       this.setState({ messages }, () =>
-        socket.on(
-          SocketEvents.ADD_MESSAGE + channels[currentChannelIdx].name,
-          (message: Message) => {
-            this.setState((state, props) => ({
-              messages: [...state.messages, message],
-            }));
-          }
-        )
+        socket.on(SocketEvents.ADD_MESSAGE + messageKey, (message: Message) => {
+          this.setState((state, props) => ({
+            messages: [...state.messages, message],
+          }));
+        })
       );
     });
   };
@@ -120,6 +132,7 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
         ch.isOpened = ch.id === channel.id;
         return ch;
       }),
+      channelActive: true,
     }));
 
     this.getMessagesAndListen();
@@ -132,17 +145,36 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
   };
 
   openUser = (user: User) => {
-    this.setState((state, props) => ({
-      users: state.users.map((u) => {
-        u.isOpened = u.id === user.id;
-        return u;
+    this.setState(
+      (state, props) => ({
+        users: state.users.map((u) => {
+          u.isOpened = u.id === user.id;
+          return u;
+        }),
+        channelActive: false,
       }),
-    }));
+      () => this.getMessagesAndListen()
+    );
   };
 
   addMessage = (message: Message) => {
-    this.setState((state, props) => ({
-      messages: [...state.messages, message],
-    }));
+    const { channelActive, currentChannelIdx, channels } = this.state;
+    message.key = channels[currentChannelIdx].id;
+    if (!channelActive) message.key = this.getKey();
+
+    axios.post("/messages", message).then((res) => {
+      const message = res.data.data;
+      this.setState((state, props) => ({
+        messages: [...state.messages, message],
+      }));
+    });
+  };
+
+  getKey = () => {
+    const { currentUserIdx, users } = this.state;
+    return `${this.user.id}${users[currentUserIdx].id}`
+      .split("")
+      .sort()
+      .join("");
   };
 }
