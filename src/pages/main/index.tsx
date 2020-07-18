@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RouteComponentProps } from "@reach/router";
 import { Socket } from "socket.io-client";
+import axios from "axios";
 
 import "./main.css";
 import {
@@ -46,16 +47,7 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
 
   componentDidMount() {
     const { socket } = this.props;
-    const { channels, currentChannelIdx } = this.state;
-
-    socket.on(
-      SocketEvents.ADD_MESSAGE + channels[currentChannelIdx].name,
-      (message: Message) => {
-        this.setState((state, props) => ({
-          messages: [...state.messages, message],
-        }));
-      }
-    );
+    this.getMessagesAndListen();
 
     socket.on(SocketEvents.ADD_CHANNEL, (channel: Channel) => {
       this.setState((state, props) => ({
@@ -103,6 +95,25 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
     }));
   };
 
+  getMessagesAndListen = () => {
+    const { socket } = this.props;
+    const { channels, currentChannelIdx } = this.state;
+
+    axios.get("/messages").then((res) => {
+      const messages: Message[] = res.data.data;
+      this.setState({ messages }, () =>
+        socket.on(
+          SocketEvents.ADD_MESSAGE + channels[currentChannelIdx].name,
+          (message: Message) => {
+            this.setState((state, props) => ({
+              messages: [...state.messages, message],
+            }));
+          }
+        )
+      );
+    });
+  };
+
   openChannel = (channel: Channel) => {
     this.setState((state, props) => ({
       channels: state.channels.map((ch) => {
@@ -110,6 +121,8 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
         return ch;
       }),
     }));
+
+    this.getMessagesAndListen();
   };
 
   addUser = (user: User) => {
