@@ -7,10 +7,8 @@ import {
   UserSection,
   MessageSection,
 } from "../../components/organisms";
-import { Channel } from "../../interfaces/channel";
+import { Channel, User, Message } from "../../interfaces";
 import { SideTemplate } from "../../components/templates";
-import { User } from "../../interfaces/user";
-import { Message } from "../../interfaces/message";
 
 interface TProps extends RouteComponentProps {
   user: User;

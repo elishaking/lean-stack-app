@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { UserItem } from ".";
-import { User } from "../../../interfaces/user";
+import { User } from "../../../interfaces";
 
 describe("<UserItem />", () => {
   describe("Render", () => {

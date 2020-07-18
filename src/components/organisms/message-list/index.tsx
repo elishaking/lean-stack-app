@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Message } from "../../../interfaces/message";
-import { MessageItem } from "../../molecules/message-item";
+import { Message } from "../../../interfaces";
+import { MessageItem } from "../../molecules";
 
 interface TProps {
   listRef: React.RefObject<HTMLUListElement>;

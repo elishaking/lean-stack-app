@@ -1,5 +1,6 @@
 import React from "react";
-import { Message } from "../../../interfaces/message";
+
+import { Message } from "../../../interfaces";
 
 interface TProps {
   message: Message;

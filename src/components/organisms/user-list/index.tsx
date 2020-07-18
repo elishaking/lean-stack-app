@@ -1,7 +1,7 @@
 import React from "react";
 
 import { UserItem } from "../../molecules";
-import { User } from "../../../interfaces/user";
+import { User } from "../../../interfaces";
 
 interface TProps {
   users: User[];

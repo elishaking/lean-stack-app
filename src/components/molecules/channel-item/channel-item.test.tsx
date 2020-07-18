@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { ChannelItem } from ".";
-import { Channel } from "../../../interfaces/channel";
+import { Channel } from "../../../interfaces";
 
 describe("<ChannelItem />", () => {
   describe("Render", () => {

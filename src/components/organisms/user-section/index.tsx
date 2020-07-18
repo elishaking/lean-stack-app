@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "../section-style.css";
-import { User } from "../../../interfaces/user";
+import { User } from "../../../interfaces";
 import { UserList } from "../user-list";
 
 interface TProps {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Channel } from "../../../interfaces/channel";
+
+import { Channel } from "../../../interfaces";
 
 interface TProps {
   channel: Channel;

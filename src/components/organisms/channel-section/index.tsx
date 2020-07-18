@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import "../section-style.css";
 import { ChannelList } from "../channel-list";
-import { Channel } from "../../../interfaces/channel";
+import { Channel } from "../../../interfaces";
 
 interface TProps {
   channels: Channel[];

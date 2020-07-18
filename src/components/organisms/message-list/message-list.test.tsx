@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { MessageList } from ".";
-import { Message } from "../../../interfaces/message";
+import { Message } from "../../../interfaces";
 
 describe("<MessageList />", () => {
   describe("Render", () => {
@@ -19,7 +19,9 @@ describe("<MessageList />", () => {
           },
         },
       ];
-      const { getByText } = render(<MessageList messages={messages} />);
+      const { getByText } = render(
+        <MessageList listRef={React.createRef()} messages={messages} />
+      );
 
       expect(getByText(messages[0].text)).toBeInTheDocument();
       expect(getByText(messages[0].user.name)).toBeInTheDocument();

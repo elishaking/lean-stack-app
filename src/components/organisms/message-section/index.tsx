@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
 import "./style.css";
-import { User } from "../../../interfaces/user";
-import { Message } from "../../../interfaces/message";
+import { User, Message } from "../../../interfaces";
 import { MessageList } from "../message-list";
 
 interface TProps {

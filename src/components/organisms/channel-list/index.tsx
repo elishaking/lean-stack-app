@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ChannelItem } from "../../molecules";
-import { Channel } from "../../../interfaces/channel";
+import { Channel } from "../../../interfaces";
 
 interface TProps {
   channels: Channel[];

@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { MessageItem } from ".";
-import { Message } from "../../../interfaces/message";
+import { Message } from "../../../interfaces";
 
 describe("<MessageItem />", () => {
   describe("Render", () => {
