@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { RouteComponentProps } from "@reach/router";
+import { Socket } from "socket.io-client";
 
 import "./main.css";
 import {
@@ -9,9 +10,11 @@ import {
 } from "../../components/organisms";
 import { Channel, User, Message } from "../../interfaces";
 import { SideTemplate } from "../../components/templates";
+import { SocketEvents } from "../../constants/socket.events";
 
 interface TProps extends RouteComponentProps {
   user: User;
+  socket: typeof Socket;
 }
 
 interface TState {
@@ -19,6 +22,7 @@ interface TState {
   users: User[];
   messages: Message[];
   currentUserIdx: number;
+  currentChannelIdx: number;
 }
 
 export class MainPage extends Component<TProps, Readonly<TState>> {
@@ -36,7 +40,61 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
       users: [props.user],
       messages: [],
       currentUserIdx: 0,
+      currentChannelIdx: 0,
     };
+  }
+
+  componentDidMount() {
+    const { socket } = this.props;
+    const { channels, currentChannelIdx } = this.state;
+
+    socket.on(
+      SocketEvents.ADD_MESSAGE + channels[currentChannelIdx].name,
+      (message: Message) => {
+        this.setState((state, props) => ({
+          messages: [...state.messages, message],
+        }));
+      }
+    );
+
+    socket.on(SocketEvents.ADD_CHANNEL, (channel: Channel) => {
+      this.setState((state, props) => ({
+        channels: [...state.channels, channel],
+      }));
+    });
+  }
+
+  render() {
+    const {
+      channels,
+      users,
+      messages,
+      currentUserIdx,
+      currentChannelIdx,
+    } = this.state;
+
+    return (
+      <div className="main-page">
+        <SideTemplate>
+          <ChannelSection
+            channels={channels}
+            addChannel={this.addChannel}
+            openChannel={this.openChannel}
+          />
+          <UserSection
+            users={users}
+            addUser={this.addUser}
+            openUser={this.openUser}
+          />
+        </SideTemplate>
+        <MessageSection
+          messages={messages}
+          user={users[currentUserIdx]}
+          channel={channels[currentChannelIdx]}
+          addMessage={this.addMessage}
+        />
+      </div>
+    );
   }
 
   addChannel = (channel: Channel) => {
@@ -74,30 +132,4 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
       messages: [...state.messages, message],
     }));
   };
-
-  render() {
-    const { channels, users, messages, currentUserIdx } = this.state;
-
-    return (
-      <div className="main-page">
-        <SideTemplate>
-          <ChannelSection
-            channels={channels}
-            addChannel={this.addChannel}
-            openChannel={this.openChannel}
-          />
-          <UserSection
-            users={users}
-            addUser={this.addUser}
-            openUser={this.openUser}
-          />
-        </SideTemplate>
-        <MessageSection
-          messages={messages}
-          user={users[currentUserIdx]}
-          addMessage={this.addMessage}
-        />
-      </div>
-    );
-  }
 }

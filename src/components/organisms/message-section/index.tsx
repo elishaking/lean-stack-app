@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 
 import "./style.css";
-import { User, Message } from "../../../interfaces";
+import { User, Message, Channel } from "../../../interfaces";
 import { MessageList } from "../message-list";
 
 interface TProps {
   user: User;
+  channel: Channel;
   messages: Message[];
   addMessage: (message: Message) => void;
 }
@@ -36,6 +37,7 @@ export class MessageSection extends Component<TProps> {
       text: this.state.message,
       date: Date.now(),
       user: this.props.user,
+      channel: this.props.channel,
     });
     this.setState(
       {
