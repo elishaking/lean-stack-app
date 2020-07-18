@@ -2,15 +2,21 @@ import React, { Component } from "react";
 import { RouteComponentProps } from "@reach/router";
 
 import "./main.css";
-import { ChannelSection, UserSection } from "../../components/organisms";
+import {
+  ChannelSection,
+  UserSection,
+  MessageSection,
+} from "../../components/organisms";
 import { Channel } from "../../interfaces/channel";
 import { SideTemplate } from "../../components/templates";
 import { User } from "../../interfaces/user";
+import { Message } from "../../interfaces/message";
 
 interface TState {
   channels: Channel[];
   users: User[];
-  messages: string[];
+  messages: Message[];
+  currentUserIdx: number;
 }
 
 export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
@@ -22,8 +28,15 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
         isOpened: true,
       },
     ],
-    users: [],
+    users: [
+      {
+        id: "King E",
+        name: "King E",
+        isOpened: false,
+      },
+    ],
     messages: [],
+    currentUserIdx: -1,
   };
 
   addChannel = (channel: Channel) => {
@@ -56,8 +69,10 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
     }));
   };
 
+  addMessage = () => {};
+
   render() {
-    const { channels, users } = this.state;
+    const { channels, users, messages, currentUserIdx } = this.state;
 
     return (
       <div className="main-page">
@@ -73,6 +88,11 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
             openUser={this.openUser}
           />
         </SideTemplate>
+        <MessageSection
+          messages={messages}
+          user={users[currentUserIdx]}
+          addMessage={this.addMessage}
+        />
       </div>
     );
   }

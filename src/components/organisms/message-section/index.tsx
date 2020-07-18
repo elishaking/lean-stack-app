@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import "../section-style.css";
+import "./style.css";
 import { User } from "../../../interfaces/user";
-import { UserList } from "../user-list";
 import { Message } from "../../../interfaces/message";
 import { MessageList } from "../message-list";
 
@@ -10,7 +9,6 @@ interface TProps {
   user: User;
   messages: Message[];
   addMessage: (message: Message) => void;
-  openMessage: (message: Message) => void;
 }
 
 export class MessageSection extends Component<TProps> {
