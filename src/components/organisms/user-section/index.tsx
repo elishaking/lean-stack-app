@@ -34,20 +34,12 @@ export class UserSection extends Component<TProps> {
   };
 
   render() {
-    const { user } = this.state;
     const { users, openUser } = this.props;
 
     return (
       <div className="user-section">
+        <h3>Users</h3>
         <UserList users={users} openUser={openUser} />
-        <form onSubmit={this.addUser}>
-          <input
-            name="user"
-            placeholder="Add user"
-            onChange={this.onChange}
-            value={user}
-          />
-        </form>
       </div>
     );
   }

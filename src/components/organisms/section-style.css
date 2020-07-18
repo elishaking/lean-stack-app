@@ -8,6 +8,13 @@ ul {
   margin-bottom: 3em;
 }
 
+h3 {
+  margin-top: 1em;
+  margin-bottom: 0.1em;
+  padding: 0.3em 1.9em;
+  color: #eae2b7;
+}
+
 li {
   padding: 0.3em 2em;
   overflow: hidden;

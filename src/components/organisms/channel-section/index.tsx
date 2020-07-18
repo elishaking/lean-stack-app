@@ -39,6 +39,7 @@ export class ChannelSection extends Component<TProps> {
 
     return (
       <div className="channel-section">
+        <h3>Channels</h3>
         <ChannelList channels={channels} openChannel={openChannel} />
         <form onSubmit={this.addChannel}>
           <input
