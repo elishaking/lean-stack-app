@@ -4,12 +4,13 @@ import { Message } from "../../../interfaces/message";
 import { MessageItem } from "../../molecules/message-item";
 
 interface TProps {
+  listRef: React.RefObject<HTMLUListElement>;
   messages: Message[];
 }
 
-export const MessageList = ({ messages }: TProps) => {
+export const MessageList = ({ listRef, messages }: TProps) => {
   return (
-    <ul>
+    <ul ref={listRef}>
       {messages.map((message) => {
         return <MessageItem key={message.id} message={message} />;
       })}

@@ -1,24 +1,27 @@
-.channel-section {
-  color: white;
-  margin-bottom: 3em;
-}
-
 ul {
   list-style: none;
   margin-bottom: 1em;
 }
 
+.channel-section {
+  color: white;
+  margin-bottom: 3em;
+}
+
 li {
   padding: 0.3em 2em;
-  text-transform: capitalize;
-  cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   transition: 0.3s ease-in-out;
 }
 
-li:hover {
+.channel-section li {
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.channel-section li:hover {
   background-color: #002031;
 }
 

@@ -16,6 +16,14 @@ export class MessageSection extends Component<TProps> {
     message: "",
   };
 
+  messageListRef: React.RefObject<HTMLUListElement>;
+
+  constructor(props: TProps) {
+    super(props);
+
+    this.messageListRef = React.createRef();
+  }
+
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       message: e.target.value,
@@ -30,9 +38,18 @@ export class MessageSection extends Component<TProps> {
       date: Date.now(),
       user: this.props.user,
     });
-    this.setState({
-      message: "",
-    });
+    this.setState(
+      {
+        message: "",
+      },
+      () => {
+        const ul = this.messageListRef.current;
+        ul?.scrollTo({
+          behavior: "smooth",
+          top: ul.scrollHeight,
+        });
+      }
+    );
   };
 
   render() {
@@ -41,7 +58,7 @@ export class MessageSection extends Component<TProps> {
 
     return (
       <div className="message-section">
-        <MessageList messages={messages} />
+        <MessageList listRef={this.messageListRef} messages={messages} />
         <form onSubmit={this.addMessage}>
           <input
             name="message"

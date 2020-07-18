@@ -36,7 +36,7 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
       },
     ],
     messages: [],
-    currentUserIdx: -1,
+    currentUserIdx: 0,
   };
 
   addChannel = (channel: Channel) => {
@@ -69,7 +69,11 @@ export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
     }));
   };
 
-  addMessage = () => {};
+  addMessage = (message: Message) => {
+    this.setState((state, props) => ({
+      messages: [...state.messages, message],
+    }));
+  };
 
   render() {
     const { channels, users, messages, currentUserIdx } = this.state;

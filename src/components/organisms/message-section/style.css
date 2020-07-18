@@ -6,6 +6,26 @@
 
 .message-section ul {
   flex: 1;
+  overflow: auto;
+  margin-left: 2em;
+}
+
+li {
+  padding-left: 0;
+  position: relative;
+  width: 87%;
+  border-bottom: 1px solid #ececec;
+}
+
+.message-section small {
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+small.date {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .message-section input {
