@@ -10,11 +10,11 @@
   margin-left: 2em;
 }
 
-li {
-  padding-left: 0;
-  position: relative;
-  width: 87%;
+.message-section li {
   border-bottom: 1px solid #ececec;
+  padding-left: 0;
+  width: 87%;
+  position: relative;
 }
 
 .message-section small {

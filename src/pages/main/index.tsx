@@ -12,6 +12,10 @@ import { SideTemplate } from "../../components/templates";
 import { User } from "../../interfaces/user";
 import { Message } from "../../interfaces/message";
 
+interface TProps extends RouteComponentProps {
+  user: User;
+}
+
 interface TState {
   channels: Channel[];
   users: User[];
@@ -19,25 +23,23 @@ interface TState {
   currentUserIdx: number;
 }
 
-export class MainPage extends Component<RouteComponentProps, Readonly<TState>> {
-  state = {
-    channels: [
-      {
-        id: "General",
-        name: "General",
-        isOpened: true,
-      },
-    ],
-    users: [
-      {
-        id: "King E",
-        name: "King E",
-        isOpened: false,
-      },
-    ],
-    messages: [],
-    currentUserIdx: 0,
-  };
+export class MainPage extends Component<TProps, Readonly<TState>> {
+  constructor(props: TProps) {
+    super(props);
+
+    this.state = {
+      channels: [
+        {
+          id: "General",
+          name: "General",
+          isOpened: true,
+        },
+      ],
+      users: [props.user],
+      messages: [],
+      currentUserIdx: 0,
+    };
+  }
 
   addChannel = (channel: Channel) => {
     this.setState((state, props) => ({
