@@ -25,6 +25,8 @@ interface TState {
   currentUserIdx: number;
   currentChannelIdx: number;
   channelActive: boolean;
+  addingMessage: boolean;
+  addingChannel: boolean;
 }
 
 export class MainPage extends Component<TProps, Readonly<TState>> {
@@ -48,6 +50,8 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
       currentUserIdx: 0,
       currentChannelIdx: 0,
       channelActive: true,
+      addingMessage: false,
+      addingChannel: false,
     };
   }
 
@@ -69,6 +73,8 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
       messages,
       currentUserIdx,
       currentChannelIdx,
+      addingMessage,
+      addingChannel,
     } = this.state;
 
     return (
@@ -78,6 +84,7 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
             channels={channels}
             addChannel={this.addChannel}
             openChannel={this.openChannel}
+            addingChannel={addingChannel}
           />
           <UserSection
             users={users}
@@ -90,6 +97,7 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
           user={users[currentUserIdx]}
           channel={channels[currentChannelIdx]}
           addMessage={this.addMessage}
+          addingMessage={addingMessage}
         />
       </div>
     );
@@ -162,11 +170,9 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
     message.key = channels[currentChannelIdx].id;
     if (!channelActive) message.key = this.getKey();
 
+    this.setState({ addingMessage: true });
     axios.post("/messages", message).then((res) => {
-      const message = res.data.data;
-      this.setState((state, props) => ({
-        messages: [...state.messages, message],
-      }));
+      this.setState({ addingMessage: false });
     });
   };
 

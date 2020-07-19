@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import "./auth.css";
 import { User } from "../../interfaces";
+import { Input } from "../../components/atoms";
 
 export class AuthPage extends Component {
   name = "";
@@ -26,11 +27,16 @@ export class AuthPage extends Component {
       <div className="auth-page">
         <h1>Lean Slack</h1>
         <form onSubmit={this.onSubmit}>
-          <input
+          <Input
+            kind="primary"
             placeholder="what's your name"
             name="name"
             onChange={this.onChange}
             required
+            style={{
+              width: "80vw",
+              maxWidth: "500px",
+            }}
           />
         </form>
       </div>

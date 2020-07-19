@@ -27,15 +27,3 @@ small.date {
   right: 0;
   bottom: 0;
 }
-
-.message-section input {
-  padding: 1em 2em;
-  width: 87%;
-  background-color: #ccc;
-  color: #000;
-  margin-bottom: 1em;
-}
-
-.message-section input::placeholder {
-  color: #686868;
-}
