@@ -6,5 +6,5 @@ export interface Message {
   text: string;
   date: number;
   user: User;
-  channel: Channel;
+  channel: Channel | null;
 }
