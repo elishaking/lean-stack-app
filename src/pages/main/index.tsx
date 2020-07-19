@@ -135,13 +135,18 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
   };
 
   openChannel = (channel: Channel) => {
-    this.setState((state, props) => ({
-      channels: state.channels.map((ch) => {
-        ch.isOpened = ch.id === channel.id;
-        return ch;
-      }),
-      channelActive: true,
-    }));
+    this.setState((state, props) => {
+      if (!state.channelActive)
+        state.users[state.currentUserIdx].isOpened = false;
+
+      return {
+        channels: state.channels.map((ch) => {
+          ch.isOpened = ch.id === channel.id;
+          return ch;
+        }),
+        channelActive: true,
+      };
+    });
 
     this.getMessagesAndListen();
   };
@@ -154,13 +159,19 @@ export class MainPage extends Component<TProps, Readonly<TState>> {
 
   openUser = (user: User) => {
     this.setState(
-      (state, props) => ({
-        users: state.users.map((u) => {
-          u.isOpened = u.id === user.id;
-          return u;
-        }),
-        channelActive: false,
-      }),
+      (state, props) => {
+        if (state.channelActive)
+          state.channels[state.currentChannelIdx].isOpened = false;
+
+        return {
+          users: state.users.map((u) => {
+            u.isOpened = u.id === user.id;
+            return u;
+          }),
+          channelActive: false,
+          channels: state.channels,
+        };
+      },
       () => this.getMessagesAndListen()
     );
   };
